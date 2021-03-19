@@ -61,7 +61,6 @@ map s <nop>
 map Q :q<CR> 
 
 
-map R :source $MYVIMRC<CR>
 map ; :
 
 map sl :set sp<CR>:vsp<CR>
@@ -84,9 +83,14 @@ map - :resize -5<CR>
 map 1 :vertical resize -5<CR>
 map 2 : vertical resize +5<CR>
 
-map ct :tabe<CR>
+" Create a new tab with tu
+map tu :tabe<CR>
+" Move around tabs 
 map th :-tabnext<CR>
 map tl :+tabnext<CR>
+" Move the tabs 
+map tmh :-tabmove<CR>
+map tml :+tabmove<CR>
 
 map sv <C-w>t<C-w>H
 map sh <C-w>t<C-w>K
@@ -196,7 +200,7 @@ map H :UndotreeToggle<CR>
 set rtp+=/usr/local/opt/fzf
 
 nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
-nmap <C>rn <Plug>(coc-rename)
+nmap <Leader>rn <Plug>(coc-rename)
 " ctrl + b 跳转到函数，并在新的tab页面中打开
 nmap <silent> <C-b> :call CocAction('jumpDefinition', 'tab drop')<CR>
 
@@ -212,9 +216,13 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" 回车选中补全，而不是换行
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else           
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>" 
-endif
+
+map R :call CompileBuildrrr()<CR>
+func! CompileBuildrrr()
+  exec "w"
+  if &filetype == 'vim'
+    exec "source $MYVIMRC"
+  endif
+endfunc
+
+
