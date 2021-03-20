@@ -12,15 +12,6 @@
 " - hotkey to switch between light theme and dark theme (in progress, still
 "   some bugs
 
-" ===
-" === Auto load for first time uses
-" ===
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
 " ====================
 " === Editor Setup ===
 " ====================
@@ -160,7 +151,6 @@ Plug 'fadein/vim-FIGlet'
 " Home page show file list
 Plug 'mhinz/vim-startify'
 
-
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'voldikss/vim-floaterm'
@@ -192,9 +182,14 @@ let b:ale_fixers = ['autopep8', 'yapf']
 let g:indentLine_color_term = 243 " 对齐线的颜色
 let g:indentLine_char = '┊' " 用字符串代替默认的标示线
 
+let g:lazygit_floating_window_winblend = 0 " transparency of floating window
+let g:lazygit_floating_window_scaling_factor = 1.0 " scaling factor for floating window
+let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
+let g:lazygit_use_neovim_remote = 1 " for neovim-remote support
 
 map <Space><Space> <Esc>/<++><CR>:nohlsearch<CR>c4l
 nmap <C-P> :Files<CR>
+nmap <Leader>f :FloatermToggle<CR>
 
 map H :UndotreeToggle<CR>
 set rtp+=/usr/local/opt/fzf
@@ -217,12 +212,5 @@ function! s:check_back_space() abort
 endfunction
 
 
-map R :call CompileBuildrrr()<CR>
-func! CompileBuildrrr()
-  exec "w"
-  if &filetype == 'vim'
-    exec "source $MYVIMRC"
-  endif
-endfunc
 
 
